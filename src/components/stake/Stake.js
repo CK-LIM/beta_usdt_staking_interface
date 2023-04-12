@@ -791,7 +791,7 @@ function StakeMenu(props) {
               width: "100%"
             }}
           > */}
-      <div className="lkBtSA" style={{ borderRadius: "20px", marginRight: "20px", marginBottom: "16px" }}>
+      <div className="lkBtSA" style={{ borderRadius: "20px", marginRight: "20px", marginBottom: "20px" }}>
         {/* <Link to="/liquidity" className='exLink0'> */}
         <div
           className="card cardbody"
@@ -964,12 +964,9 @@ function StakeMenu(props) {
                           }}
                         >
                           <div>
-                            {/* {props.APR.toLocaleString("en-US", {
+                            {props.APR.toLocaleString("en-US", {
                               maximumFractionDigits: 2
-                            })}{" "} */}
-                            {((100 * ((4000 / 7) * 365)) / (parseFloat(window.web3Eth.utils.fromWei(props.poolSize, "mwei")) + parseFloat(window.web3Fx.utils.fromWei(props.poolSize_third, "mwei")))).toLocaleString("en-US", {
-                              maximumFractionDigits: 0
-                            })}
+                            })}{" "}
                             %
                           </div>
                         </div>
@@ -1070,7 +1067,8 @@ function StakeMenu(props) {
           </div>
         ) : null}
       </div>
-      <div className="lkBtSA" style={{ borderRadius: "20px" }}>
+
+      <div className="lkBtSA" style={{ borderRadius: "20px", marginBottom: "20px" }}>
         {/* <Link to="/liquidity" className='exLink0'> */}
         <div
           className="card cardbody"
@@ -1522,12 +1520,9 @@ function StakeMenu(props) {
                           }}
                         >
                           <div>
-                            {/* {props.APR_second.toLocaleString("en-US", {
+                            {props.APR_third.toLocaleString("en-US", {
                               maximumFractionDigits: 2
-                            })}{" "} */}
-                            {((100 * ((4000 / 7) * 365)) / (parseFloat(window.web3Eth.utils.fromWei(props.poolSize, "mwei")) + parseFloat(window.web3Fx.utils.fromWei(props.poolSize_third, "mwei")))).toLocaleString("en-US", {
-                              maximumFractionDigits: 0
-                            })}
+                            })}{" "}
                             %
                           </div>
                         </div>
@@ -1760,7 +1755,7 @@ function StakeMenu(props) {
         <div
           className="card cardbody"
           style={{
-            marginBottom: "16px",
+            marginBottom: "20px",
             height: "180px",
             minWidth: "300px",
             maxWidth: "490px",

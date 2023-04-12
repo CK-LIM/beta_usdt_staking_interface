@@ -130,7 +130,8 @@ class App extends Component {
     let poolBlackoutWindow = await response7;
     let maxPoolSize = await response8;
 
-    let APR = ((window.web3Eth.utils.fromWei(poolRewardRate, "Ether") * 31536000 * this.state.fxPrice) / window.web3Eth.utils.fromWei(poolSize, "mWei")) * 100;
+    // let APR = ((window.web3Eth.utils.fromWei(poolRewardRate, "Ether") * 31536000 * this.state.fxPrice) / window.web3Eth.utils.fromWei(poolSize, "mWei")) * 100;
+    let APR = 23.2;
     let remainingPoolDepositedSize = maxPoolSize - poolSize;
     let poolEndOfCurrentEpoch = parseInt(poolStartOfCurrentEpoch) + parseInt(poolEpochInterval);
 
@@ -202,7 +203,8 @@ class App extends Component {
     let poolBlackoutWindow_third = await response7_third;
     let maxPoolSize_third = await response8_third;
 
-    let APR_third = ((window.web3Fx.utils.fromWei(poolRewardRate_third, "Ether") * 31536000 * this.state.fxPrice) / window.web3Fx.utils.fromWei(poolSize_third, "mWei")) * 100;
+    // let APR_third = ((window.web3Fx.utils.fromWei(poolRewardRate_third, "Ether") * 31536000 * this.state.fxPrice) / window.web3Fx.utils.fromWei(poolSize_third, "mWei")) * 100;
+    let APR_third = 23.2
     let remainingPoolDepositedSize_third = maxPoolSize_third - poolSize_third;
     let poolEndOfCurrentEpoch_third = parseInt(poolStartOfCurrentEpoch_third) + parseInt(poolEpochInterval_third);
 
@@ -1491,7 +1493,18 @@ class App extends Component {
     let navMenuContent;
     let footerContent;
 
-    navMenuContent = <NavbMenu account={this.state.account} first4Account={this.state.first4Account} last4Account={this.state.last4Account} wallet={this.state.wallet} networkName={this.state.networkName} walletConnect={this.state.walletConnect} BAVAPrice={this.state.BAVAPrice} setWalletTrigger={this.setWalletTrigger} connectMetamask={this.connectMetamask} mobileWalletConnect={this.mobileWalletConnect} connectCoin98={this.connectCoin98} WalletDisconnect={this.WalletDisconnect} addUSBTokenWallet={this.addUSBTokenWallet} addBAVATokenWallet={this.addBAVATokenWallet} sortFarm={this.sortFarm} />;
+    navMenuContent = <NavbMenu account={this.state.account} first4Account={this.state.first4Account} 
+    last4Account={this.state.last4Account} wallet={this.state.wallet} 
+    networkName={this.state.networkName} 
+    walletConnect={this.state.walletConnect} BAVAPrice={this.state.BAVAPrice} 
+    setWalletTrigger={this.setWalletTrigger} 
+    connectMetamask={this.connectMetamask} 
+    mobileWalletConnect={this.mobileWalletConnect} 
+    connectCoin98={this.connectCoin98} 
+    WalletDisconnect={this.WalletDisconnect} 
+    addUSBTokenWallet={this.addUSBTokenWallet} 
+    addBAVATokenWallet={this.addBAVATokenWallet} 
+    sortFarm={this.sortFarm} />;
 
     footerContent = <Footer />;
 
