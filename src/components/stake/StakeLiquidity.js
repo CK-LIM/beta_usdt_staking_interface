@@ -174,9 +174,9 @@ function StakeLiquidity(props) {
                                   {/* {parseFloat(window.web3Eth.utils.fromWei(props.poolRewardRate, "Ether") * 86400).toLocaleString("en-US", {
                                     maximumFractionDigits: 0
                                   })} */}
-                                  {((100 * ((4000 / 7) * 365)) / (parseFloat(window.web3Eth.utils.fromWei(props.poolSize, "mwei")) + parseFloat(window.web3Fx.utils.fromWei(props.poolSize_third, "mwei")))).toLocaleString("en-US", {
-                                    maximumFractionDigits: 0
-                                  })}
+                                  {props.APR.toLocaleString("en-US", {
+                                    maximumFractionDigits: 2
+                                  })}{" "}
                                   %
                                 </div>
                                 {/* <div className="JYkOF">
@@ -1020,10 +1020,9 @@ function StakeLiquidity(props) {
                             }}
                           >
                             <div>
-                              {" "}
-                              {((100 * ((4000 / 7) * 365)) / (parseFloat(window.web3Eth.utils.fromWei(props.poolSize, "mwei")) + parseFloat(window.web3Fx.utils.fromWei(props.poolSize_third, "mwei")))).toLocaleString("en-US", {
-                                maximumFractionDigits: 0
-                              })}
+                              {props.APR.toLocaleString("en-US", {
+                                maximumFractionDigits: 2
+                              })}{" "}
                               %
                             </div>
                             {/* <div className="JYkOF">
@@ -3514,12 +3513,9 @@ function StakeLiquidity(props) {
                                 }}
                               >
                                 <div>
-                                  {/* {parseFloat(window.web3Eth.utils.fromWei(props.poolRewardRate_second, "Ether") * 86400).toLocaleString("en-US", {
-                                    maximumFractionDigits: 0
-                                  })} */}
-                                  {((100 * ((4000 / 7) * 365)) / (parseFloat(window.web3Eth.utils.fromWei(props.poolSize, "mwei")) + parseFloat(window.web3Fx.utils.fromWei(props.poolSize_third, "mwei")))).toLocaleString("en-US", {
-                                    maximumFractionDigits: 0
-                                  })}
+                                  {props.APR_third.toLocaleString("en-US", {
+                                    maximumFractionDigits: 2
+                                  })}{" "}
                                   %
                                 </div>
                                 {/* <div className="JYkOF">
@@ -4347,12 +4343,9 @@ function StakeLiquidity(props) {
                             }}
                           >
                             <div>
-                              {/* {parseFloat(window.web3Eth.utils.fromWei(props.poolRewardRate_second, "Ether") * 86400).toLocaleString("en-US", {
-                                maximumFractionDigits: 0
-                              })} */}{" "}
-                              {((100 * ((4000 / 7) * 365)) / (parseFloat(window.web3Eth.utils.fromWei(props.poolSize, "mwei")) + parseFloat(window.web3Fx.utils.fromWei(props.poolSize_third, "mwei")))).toLocaleString("en-US", {
-                                maximumFractionDigits: 0
-                              })}
+                              {props.APR_third.toLocaleString("en-US", {
+                                maximumFractionDigits: 2
+                              })}{" "}
                               %
                             </div>
                             {/* <div className="JYkOF">

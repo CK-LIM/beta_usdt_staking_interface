@@ -238,7 +238,7 @@ class App extends Component {
     let maxPoolSize;
 
     if (address === process.env.REACT_APP_liquiditystakingV1_address) {
-      return "469684303929";  // 469684303929
+      return "469684303929";  // 469684303929 500000000000
     } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
       const liquidityStakingV1 = new window.web3Eth.eth.Contract(LiquidityStakingV1.abi, address);
       maxPoolSize = await liquidityStakingV1.methods.getMaxPoolSize().call();
