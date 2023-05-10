@@ -191,7 +191,7 @@ function StakeMenu(props) {
                                 }}
                               >
                                 {parseFloat(window.web3Eth.utils.fromWei(props.userEarnedRewardAmount, "Ether")) + parseFloat(window.web3Eth.utils.fromWei(props.userEarnedRewardAmount_second, "Ether")) + parseFloat(window.web3Fx.utils.fromWei(props.userEarnedRewardAmount_third, "Ether")) >= //Issei
-                                0 ? (
+                                  0 ? (
                                   <div>
                                     {(parseFloat(window.web3Eth.utils.fromWei(props.userEarnedRewardAmount, "Ether")) + parseFloat(window.web3Eth.utils.fromWei(props.userEarnedRewardAmount_second, "Ether")) + parseFloat(window.web3Fx.utils.fromWei(props.userEarnedRewardAmount_third, "Ether"))).toLocaleString("en-US", {
                                       maximumFractionDigits: 2
@@ -583,7 +583,7 @@ function StakeMenu(props) {
                                   )
                                 ) +
                                 parseFloat(window.web3Fx.utils.fromWei(props.userEarnedRewardAmount_third, "Ether")) >= //issei
-                              0 ? (
+                                0 ? (
                                 <div>
                                   {(
                                     parseFloat(window.web3Eth.utils.fromWei(props.userEarnedRewardAmount, "Ether")) +
@@ -808,11 +808,11 @@ function StakeMenu(props) {
                 Maker Liquidity Pool USDT (ERC20)
               </div>
               {/* <div className="float-right" style={{ marginLeft: "10px" }}>
-                                  <ImgNextGen
-                                      srcWebp={usdt}
-                                      width="32px" height="32px" alt=""
-                                  />
-                              </div> */}
+                <ImgNextGen
+                  srcWebp={usdt}
+                  width="32px" height="32px" alt=""
+                />
+              </div> */}
               <Link
                 to={{
                   pathname: "/liquidity",
