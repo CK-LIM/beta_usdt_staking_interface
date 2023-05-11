@@ -982,7 +982,7 @@ function StakeMenu(props) {
                       Your Deposit
                     </td>
                     <td style={{ textAlign: "start" }} scope="col" width="120">
-                      APR
+                    Last epoch's APR
                     </td>
                   </tr>
                 </tbody>
@@ -1192,7 +1192,7 @@ function StakeMenu(props) {
                       Pool Size
                     </td>
                     <td style={{ textAlign: "start" }} scope="col" width="120">
-                      This week's APR {/* Yield / day */}
+                      This epoch's APR {/* Yield / day */}
                     </td>
                   </tr>
                 </tbody>
@@ -1538,7 +1538,7 @@ function StakeMenu(props) {
                       Your Deposit
                     </td>
                     <td style={{ textAlign: "start" }} scope="col" width="120">
-                      APR
+                    Last epoch's APR
                     </td>
                   </tr>
                 </tbody>

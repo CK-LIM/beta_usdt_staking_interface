@@ -131,7 +131,7 @@ class App extends Component {
     let maxPoolSize = await response8;
 
     // let APR = ((window.web3Eth.utils.fromWei(poolRewardRate, "Ether") * 31536000 * this.state.fxPrice) / window.web3Eth.utils.fromWei(poolSize, "mWei")) * 100;
-    let APR = 23.2;
+    let APR = 18.49;
     let remainingPoolDepositedSize = maxPoolSize - poolSize;
     let poolEndOfCurrentEpoch = parseInt(poolStartOfCurrentEpoch) + parseInt(poolEpochInterval);
 
@@ -204,7 +204,7 @@ class App extends Component {
     let maxPoolSize_third = await response8_third;
 
     // let APR_third = ((window.web3Fx.utils.fromWei(poolRewardRate_third, "Ether") * 31536000 * this.state.fxPrice) / window.web3Fx.utils.fromWei(poolSize_third, "mWei")) * 100;
-    let APR_third = 23.2
+    let APR_third = 18.49
     let remainingPoolDepositedSize_third = maxPoolSize_third - poolSize_third;
     let poolEndOfCurrentEpoch_third = parseInt(poolStartOfCurrentEpoch_third) + parseInt(poolEpochInterval_third);
 
@@ -864,7 +864,7 @@ class App extends Component {
     } else {
       const accounts = await window.web3.eth.getAccounts();
       this.setState({ account: accounts[0] });
-      // this.setState({ account: "0x81Fc59079c9cc02386BeFA4814ceA370Be4f7F44" })
+      // this.setState({ account: "0x93975E1E841079541C654d8841DB9a7d2D17aC58" })
       const first4Account = this.state.account.substring(0, 5);
       const last4Account = this.state.account.slice(-4);
       this.setState({ first4Account: first4Account });
