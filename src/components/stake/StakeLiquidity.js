@@ -905,7 +905,7 @@ function StakeLiquidity(props) {
                           }}
                           size="lg"
                           onClick={() => {
-                            window.open(`https://forum.starscan.io/t/epoch-5-maker-liquidity-pool-60-platform-fee-reward/5247`, "_blank");
+                            window.open(`https://forum.starscan.io/t/epoch-6-beyond-maker-liquidity-pool-60-platform-fee-reward/5281`, "_blank");
                           }}
                         >
                           &#8599; Forums
@@ -1714,7 +1714,7 @@ function StakeLiquidity(props) {
                       size="lg"
                       onClick={() => {
                         // window.open(`https://forum.starscan.io/t/proposal-of-maker-liquidity-pool-usdt-erc-20-beta/4955`, "_blank");
-                        window.open(`https://forum.starscan.io/t/epoch-5-maker-liquidity-pool-60-platform-fee-reward/5247`, "_blank");
+                        window.open(`https://forum.starscan.io/t/epoch-6-beyond-maker-liquidity-pool-60-platform-fee-reward/5281`, "_blank");
                       }}
                     >
                       &#8599; Forums
@@ -4231,7 +4231,7 @@ function StakeLiquidity(props) {
                           }}
                           size="lg"
                           onClick={() => {
-                            window.open(`https://forum.starscan.io/t/epoch-5-maker-liquidity-pool-60-platform-fee-reward/5247`, "_blank");
+                            window.open(`https://forum.starscan.io/t/epoch-6-beyond-maker-liquidity-pool-60-platform-fee-reward/5281`, "_blank");
                           }}
                         >
                           &#8599; Forums
@@ -5024,7 +5024,7 @@ function StakeLiquidity(props) {
                       }}
                       size="lg"
                       onClick={() => {
-                        window.open(`https://forum.starscan.io/t/epoch-5-maker-liquidity-pool-60-platform-fee-reward/5247`, "_blank");
+                        window.open(`https://forum.starscan.io/t/epoch-6-beyond-maker-liquidity-pool-60-platform-fee-reward/5281`, "_blank");
                       }}
                     >
                       &#8599; Forums
