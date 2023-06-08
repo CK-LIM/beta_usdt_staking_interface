@@ -129,7 +129,13 @@ class App extends Component {
     let poolStartOfCurrentEpoch = await response6;
     let poolBlackoutWindow = await response7;
     let maxPoolSize = await response8;
-
+    let blackListedAddresses = [
+      "0x901FCeaF2DC4A7b5c6d699a79DBf8468a29DD873",
+      "0x81Fc59079c9cc02386BeFA4814ceA370Be4f7F44",
+      "0x5cac851Ec1821FB1b279d34BAfF1f7e1a024678C",
+      "0x011168C78bD5094f1E198c0357072EBc74829D9D",
+      "0xe76938F1830889a6d282D42386860b260146125E"
+    ]
     // let APR = ((window.web3Eth.utils.fromWei(poolRewardRate, "Ether") * 31536000 * this.state.fxPrice) / window.web3Eth.utils.fromWei(poolSize, "mWei")) * 100;
     let APR = 18.49;
     let remainingPoolDepositedSize = maxPoolSize - poolSize;
@@ -145,6 +151,7 @@ class App extends Component {
     this.setState({ maxPoolSize });
     this.setState({ remainingPoolDepositedSize });
     this.setState({ APR });
+    this.setState({ blackListedAddresses });
 
     /*
     For the second pool 
@@ -238,14 +245,16 @@ class App extends Component {
     let maxPoolSize;
 
     if (address === process.env.REACT_APP_liquiditystakingV1_address) {
-      return "429359947679";  // 500000000000
+      const liquidityStakingV1 = new window.web3Eth.eth.Contract(LiquidityStakingV1.abi, address);
+      maxPoolSize = await liquidityStakingV1.methods.getTotalActiveBalanceCurrentEpoch().call();
     } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
       const liquidityStakingV1 = new window.web3Eth.eth.Contract(LiquidityStakingV1.abi, address);
       maxPoolSize = await liquidityStakingV1.methods.getMaxPoolSize().call();
     } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
+      // const liquidityStakingV1 = new window.web3Fx.eth.Contract(LiquidityStakingV1.abi, process.env.REACT_APP_liquiditystakingV1_address_real_third);
+      // maxPoolSize = await liquidityStakingV1.methods.getMaxPoolSize().call();
       const liquidityStakingV1 = new window.web3Fx.eth.Contract(LiquidityStakingV1.abi, process.env.REACT_APP_liquiditystakingV1_address_real_third);
-      maxPoolSize = await liquidityStakingV1.methods.getMaxPoolSize().call();
-      return "22582405820"
+      maxPoolSize = await liquidityStakingV1.methods.getTotalActiveBalanceCurrentEpoch().call();
     }
     return maxPoolSize;
   }
@@ -432,94 +441,121 @@ class App extends Component {
 
   //  Async User Info Function
   async loadUserUSDTBalance(chainId) {
-    if (chainId === process.env.REACT_APP_chainid) {
-      let usdtTokenBalance = await this.state.usdtToken.methods.balanceOf(this.state.account).call();
-      return usdtTokenBalance;
-    } else if (chainId === process.env.REACT_APP_chainid_fxevm) {
-      let usdtTokenBalance = await this.state.usdtTokenFxEVM.methods.balanceOf(this.state.account).call();
-      return usdtTokenBalance;
-    }
+    if(this.state.blackListedAddresses.includes(this.state.account)) {
+      return "0";
+    } else {
+      if (chainId === process.env.REACT_APP_chainid) {
+        let usdtTokenBalance = await this.state.usdtToken.methods.balanceOf(this.state.account).call();
+        return usdtTokenBalance;
+      } else if (chainId === process.env.REACT_APP_chainid_fxevm) {
+        let usdtTokenBalance = await this.state.usdtTokenFxEVM.methods.balanceOf(this.state.account).call();
+        return usdtTokenBalance;
+      }
+    }    
   }
 
   async loadUserStakedBalance(address) {
     let stakedBalance;
-    if (address === process.env.REACT_APP_liquiditystakingV1_address) {
-      stakedBalance = await this.state.liquidityStakingV1.methods.getActiveBalanceCurrentEpoch(this.state.account).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
-      stakedBalance = await this.state.liquidityStakingV1_second.methods.getActiveBalanceCurrentEpoch(this.state.account).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
-      stakedBalance = await this.state.liquidityStakingV1_third.methods.getActiveBalanceCurrentEpoch(this.state.account).call();
-    }
-    return stakedBalance;
+    if(this.state.blackListedAddresses.includes(this.state.account)) {
+      return "0";
+    } else {
+      if (address === process.env.REACT_APP_liquiditystakingV1_address) {
+        stakedBalance = await this.state.liquidityStakingV1.methods.getActiveBalanceCurrentEpoch(this.state.account).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
+        stakedBalance = await this.state.liquidityStakingV1_second.methods.getActiveBalanceCurrentEpoch(this.state.account).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
+        stakedBalance = await this.state.liquidityStakingV1_third.methods.getActiveBalanceCurrentEpoch(this.state.account).call();
+      }
+      return stakedBalance;
+    }    
   }
 
   async loadUserUSDTStakingAllowance(address) {
     let usdtStakingAllowance;
-    //this.state.account = "0x44f86b5fa8C8E901f28A933b6aCe084f45A3d65c";
-    if (address === process.env.REACT_APP_liquiditystakingV1_address) {
-      usdtStakingAllowance = await this.state.usdtToken.methods.allowance(this.state.account, process.env.REACT_APP_liquiditystakingV1_address).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
-      usdtStakingAllowance = await this.state.usdtToken.methods.allowance(this.state.account, process.env.REACT_APP_liquiditystakingV1_address_second).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
-      usdtStakingAllowance = await this.state.usdtTokenFxEVM.methods.allowance(this.state.account, process.env.REACT_APP_liquiditystakingV1_address_real_third).call();
+    if(this.state.blackListedAddresses.includes(this.state.account)) {
+      return "0";
+    } else {
+      if (address === process.env.REACT_APP_liquiditystakingV1_address) {
+        usdtStakingAllowance = await this.state.usdtToken.methods.allowance(this.state.account, process.env.REACT_APP_liquiditystakingV1_address).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
+        usdtStakingAllowance = await this.state.usdtToken.methods.allowance(this.state.account, process.env.REACT_APP_liquiditystakingV1_address_second).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
+        usdtStakingAllowance = await this.state.usdtTokenFxEVM.methods.allowance(this.state.account, process.env.REACT_APP_liquiditystakingV1_address_real_third).call();
+      }
+  
+      return usdtStakingAllowance;
     }
-
-    return usdtStakingAllowance;
   }
 
   async loadUserEarnedRewardAmount(address) {
-    try {
-      let userReward;
-      if (address === process.env.REACT_APP_liquiditystakingV1_address) {
-        userReward = await this.state.liquidityStakingV1.methods.getStakerReward(this.state.account).call();
-      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
-        userReward = await this.state.liquidityStakingV1_second.methods.getStakerReward(this.state.account).call();
-      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
-        userReward = await this.state.liquidityStakingV1_third.methods.getStakerReward(this.state.account).call();
+    if(this.state.blackListedAddresses.includes(this.state.account)) {
+      return "0";
+    } else {
+      try {
+        let userReward;
+        if (address === process.env.REACT_APP_liquiditystakingV1_address) {
+          userReward = await this.state.liquidityStakingV1.methods.getStakerReward(this.state.account).call();
+        } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
+          userReward = await this.state.liquidityStakingV1_second.methods.getStakerReward(this.state.account).call();
+        } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
+          userReward = await this.state.liquidityStakingV1_third.methods.getStakerReward(this.state.account).call();
+        }
+        return userReward;
+      } catch (e) {
+        return "-1";
       }
-      return userReward;
-    } catch (e) {
-      return "-1";
     }
   }
 
   async loadUserWithdrawableAmount(address) {
-    let withdrawableAmount;
-    if (address === process.env.REACT_APP_liquiditystakingV1_address) {
-      withdrawableAmount = await this.state.liquidityStakingV1.methods.getStakeAvailableToWithdraw(this.state.account).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
-      withdrawableAmount = await this.state.liquidityStakingV1_second.methods.getStakeAvailableToWithdraw(this.state.account).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
-      withdrawableAmount = await this.state.liquidityStakingV1_third.methods.getStakeAvailableToWithdraw(this.state.account).call();
-    }
-
-    return withdrawableAmount;
+    if(this.state.blackListedAddresses.includes(this.state.account)) {
+      return "0";
+    } else {
+      let withdrawableAmount;
+      if (address === process.env.REACT_APP_liquiditystakingV1_address) {
+        withdrawableAmount = await this.state.liquidityStakingV1.methods.getStakeAvailableToWithdraw(this.state.account).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
+        withdrawableAmount = await this.state.liquidityStakingV1_second.methods.getStakeAvailableToWithdraw(this.state.account).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
+        withdrawableAmount = await this.state.liquidityStakingV1_third.methods.getStakeAvailableToWithdraw(this.state.account).call();
+      }
+  
+      return withdrawableAmount;
+    }   
   }
 
   async loadUserInactiveBalanceNextEpoch(address) {
-    let inactiveBalanceNextEpoch;
-    if (address === process.env.REACT_APP_liquiditystakingV1_address) {
-      inactiveBalanceNextEpoch = await this.state.liquidityStakingV1.methods.getInactiveBalanceNextEpoch(this.state.account).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
-      inactiveBalanceNextEpoch = await this.state.liquidityStakingV1_second.methods.getInactiveBalanceNextEpoch(this.state.account).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
-      inactiveBalanceNextEpoch = await this.state.liquidityStakingV1_third.methods.getInactiveBalanceNextEpoch(this.state.account).call();
+    if(this.state.blackListedAddresses.includes(this.state.account)) {
+      return "0";
+    } else {
+      let inactiveBalanceNextEpoch;
+      if (address === process.env.REACT_APP_liquiditystakingV1_address) {
+        inactiveBalanceNextEpoch = await this.state.liquidityStakingV1.methods.getInactiveBalanceNextEpoch(this.state.account).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
+        inactiveBalanceNextEpoch = await this.state.liquidityStakingV1_second.methods.getInactiveBalanceNextEpoch(this.state.account).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
+        inactiveBalanceNextEpoch = await this.state.liquidityStakingV1_third.methods.getInactiveBalanceNextEpoch(this.state.account).call();
+      }
+  
+      return inactiveBalanceNextEpoch;
     }
-
-    return inactiveBalanceNextEpoch;
   }
 
   async loadUserActiveBalanceNextEpoch(address) {
-    let activeBalanceNextEpoch;
-    if (address === process.env.REACT_APP_liquiditystakingV1_address) {
-      activeBalanceNextEpoch = await this.state.liquidityStakingV1.methods.getActiveBalanceNextEpoch(this.state.account).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
-      activeBalanceNextEpoch = await this.state.liquidityStakingV1_second.methods.getActiveBalanceNextEpoch(this.state.account).call();
-    } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
-      activeBalanceNextEpoch = await this.state.liquidityStakingV1_third.methods.getActiveBalanceNextEpoch(this.state.account).call();
+    if(this.state.blackListedAddresses.includes(this.state.account)) {
+      return "0";
+    } else {
+      let activeBalanceNextEpoch;
+      if (address === process.env.REACT_APP_liquiditystakingV1_address) {
+        activeBalanceNextEpoch = await this.state.liquidityStakingV1.methods.getActiveBalanceNextEpoch(this.state.account).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_second) {
+        activeBalanceNextEpoch = await this.state.liquidityStakingV1_second.methods.getActiveBalanceNextEpoch(this.state.account).call();
+      } else if (address === process.env.REACT_APP_liquiditystakingV1_address_third) {
+        activeBalanceNextEpoch = await this.state.liquidityStakingV1_third.methods.getActiveBalanceNextEpoch(this.state.account).call();
+      }
+  
+      return activeBalanceNextEpoch;
     }
-
-    return activeBalanceNextEpoch;
   }
 
   // ***********************************************************************************************************************************************
@@ -864,7 +900,7 @@ class App extends Component {
     } else {
       const accounts = await window.web3.eth.getAccounts();
       this.setState({ account: accounts[0] });
-      // this.setState({ account: "0x93975E1E841079541C654d8841DB9a7d2D17aC58" })
+      this.setState({ account: "0x81Fc59079c9cc02386BeFA4814ceA370Be4f7F44" })
       const first4Account = this.state.account.substring(0, 5);
       const last4Account = this.state.account.slice(-4);
       this.setState({ first4Account: first4Account });
@@ -1540,6 +1576,7 @@ class App extends Component {
         remainingPoolDepositedSize={this.state.remainingPoolDepositedSize}
         remainingPoolDepositedSize_second={this.state.remainingPoolDepositedSize_second}
         remainingPoolDepositedSize_third={this.state.remainingPoolDepositedSize_third}
+
         APR={this.state.APR}
         APR_second={this.state.APR_second}
         APR_third={this.state.APR_third}
@@ -1560,8 +1597,10 @@ class App extends Component {
         userInactiveBalanceNextEpoch={this.state.userInactiveBalanceNextEpoch} // require duplicate
         userInactiveBalanceNextEpoch_second={this.state.userInactiveBalanceNextEpoch_second}
         userInactiveBalanceNextEpoch_third={this.state.userInactiveBalanceNextEpoch_third}
+        blackListedAddresses={this.state.blackListedAddresses}
         wallet={this.state.wallet}
         walletConnect={this.state.walletConnect}
+        account={this.state.account}
         accountLoading={this.state.accountLoading}
         blockchainLoading={this.state.blockchainLoading}
         connectMetamask={this.connectMetamask}
@@ -1628,7 +1667,9 @@ class App extends Component {
         userActiveBalanceNextEpoch={this.state.userActiveBalanceNextEpoch} // require duplicate
         userActiveBalanceNextEpoch_second={this.state.userActiveBalanceNextEpoch_second}
         userActiveBalanceNextEpoch_third={this.state.userActiveBalanceNextEpoch_third}
+        blackListedAddresses={this.state.blackListedAddresses}
         accountLoading={this.state.accountLoading}
+        account={this.state.account}
         blockchainLoading={this.state.blockchainLoading}
         wallet={this.state.wallet}
         walletConnect={this.state.walletConnect}
